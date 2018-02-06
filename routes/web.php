@@ -89,12 +89,23 @@ Route::get('/admin/getpakagetype', 'admin\PakagetypeController@getpakagetype')->
 /*  Type End   */
 
 
-Route::get('/roles/listAjax',['as'=>'roles.listAjax','uses'=>'RoleController@listAjax']);
 Route::group(['middleware' => ['role:admin']], function() {
+
+	Route::get('/roles/listAjax',['as'=>'roles.listAjax','uses'=>'RoleController@listAjax']);
 	Route::get('/admin/roles',['as'=>'roles.index','uses'=>'RoleController@index','middleware' => ['permission:role-create|role-edit|role-delete']]);
 	Route::get('/admin/addrole',['as'=>'roles.create','uses'=>'RoleController@create','middleware' => ['permission:role-create']]);
 	Route::post('/admin/role/create',['as'=>'roles.store','uses'=>'RoleController@store','middleware' => ['permission:role-create']]);
 	Route::get('/admin/deleterole/{id}',['as'=>'roles.delete','uses'=>'RoleController@destroy','middleware' => ['permission:role-delete']]);
 	Route::get('/admin/editrole/{id}',['as'=>'roles.delete','uses'=>'RoleController@edit','middleware' => ['permission:role-edit']]);
 	Route::post('/admin/role/edit',['as'=>'roles.update','uses'=>'RoleController@update','middleware' => ['permission:role-edit']]);
+
+
+	Route::get('/permission/listAjax',['as'=>'permissions.listAjax','uses'=>'PermissionController@listAjax']);
+	Route::get('/admin/permissions',['as'=>'permission.index','uses'=>'PermissionController@index' ,'middleware' => ['permission:permission-create|permission-edit|permission-delete|permission-list']]);
+	Route::get('/admin/addpermission',['as'=>'permission.create','uses'=>'PermissionController@create','middleware' => ['permission:permission-create']]);
+	Route::post('/admin/permission/create',['as'=>'permission.store','uses'=>'PermissionController@store' ,'middleware' => ['permission:permission-create']]);
+	Route::get('/admin/deletepermission/{id}',['as'=>'permission.delete','uses'=>'PermissionController@destroy' ,'middleware' => ['permission:permission-delete']]);
+	Route::get('/admin/editpermission/{id}',['as'=>'permission.delete','uses'=>'PermissionController@edit' ,'middleware' => ['permission:permission-edit']]);
+	Route::post('/admin/permission/edit',['as'=>'permission.update','uses'=>'PermissionController@update' ,'middleware' => ['permission:permission-edit']]);
+
 });

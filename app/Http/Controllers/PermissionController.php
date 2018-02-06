@@ -13,6 +13,8 @@ use App\Models\Permission;
 
 use DB;
 
+use DataTables;
+
 class PermissionController extends Controller
 {
     /**
@@ -25,13 +27,32 @@ class PermissionController extends Controller
 
      */
 
-    public function index(Request $request)
+    public function index(Request $request){
 
+        return view('permission.index');
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function listAjax()
     {
 
-        $permissions = Permission::orderBy('id','DESC')->get();
-
-        return view('permission.index',compact('permissions'));
+        return DataTables::of(Permission::get())
+               ->addColumn('action', function ($permission) {
+            return '<a href="'.url('/admin/editpermission/'.$permission->id).'" class="edit">
+                        <button class="btn btn-sm btn-primary btn-flat">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                    </a>
+                    <a href="'.url('/admin/deletepermission/'.$permission->id).'"  class="trash">
+                        <button class="btn btn-sm btn-danger btn-flat">
+                            <i class="fa fa-trash"></i>
+                        </button> 
+                    </a>';
+                })
+               ->make(true);
     }
 
 
@@ -46,13 +67,8 @@ class PermissionController extends Controller
      */
 
     public function create()
-
     {
-
-        $permission = Permission::get();
-
-        return view('permission.create',compact('permission'));
-
+        return view('permission.create');
     }
 
 
@@ -76,8 +92,6 @@ class PermissionController extends Controller
 
             'name' => 'required|unique:permissions,name',
 
-
-
         ]);
 
 
@@ -85,9 +99,9 @@ class PermissionController extends Controller
         $permission->name = $request->input('name');
         $permission->display_name = $request->input('display_name');
         $permission->description = $request->input('description');
-        $permission->module = $request->input('module');
+        // $permission->module = $request->input('module');
         $permission->save();
-        return redirect()->route('permission.index')->with('flash_message','Permission created successfully');
+        return redirect()->route('permission.index')->with('message','Permission created successfully');
 
     }
 
@@ -149,29 +163,21 @@ class PermissionController extends Controller
 
      */
 
-    public function update(Request $request, $id)
-
+    public function update(Request $request)
     {
-
         $this->validate($request, [
-
             'name' => 'required',
-
-
         ]);
 
-
+        $id = $request->id;
         $permission = Permission::find($id);
-
         $permission->name = $request->input('name');
         $permission->display_name = $request->input('display_name');
         $permission->description = $request->input('description');
-        $permission->module = $request->input('module');
+        // $permission->module = $request->input('module');
         $permission->save();
 
-        return redirect()->route('permission.index')
-
-            ->with('flash_message','Permission updated successfully');
+        return redirect()->route('permission.index')->with('message','Permission updated successfully');
 
     }
 
@@ -186,16 +192,10 @@ class PermissionController extends Controller
      * @return \Illuminate\Http\Response
 
      */
-
     public function destroy($id)
-
     {
-
         DB::table("permissions")->where('id',$id)->delete();
-
-        return redirect()->route('permission.index')
-
-            ->with('flash_message','Permission deleted successfully');
+        return redirect()->route('permission.index')->with('message','Permission deleted successfully');
 
     }
 }

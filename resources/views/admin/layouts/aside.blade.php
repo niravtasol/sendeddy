@@ -78,7 +78,7 @@
 	</li>
 
 
-	<li class="treeview @if(\Request::is('admin/roles')) active @endif">
+	<li class="treeview @if(\Request::is('admin/roles') || \Request::is('admin/permissions') ) active @endif">
 	  <a href="{{ url('/admin/roles') }}"><i class="fa fa-user"></i> <span>Roles</span>
 		<span class="pull-right-container">
 			<i class="fa fa-angle-left pull-right"></i>
@@ -87,6 +87,9 @@
 	  <ul class="treeview-menu">
 		<li>
 			<a href="{{ url('/admin/roles') }}"><i class="fa fa-user"></i> <span>All Roles</span></a>
+		</li>
+		<li>
+			<a href="{{ url('/admin/permissions') }}"><i class="fa fa-key"></i> <span>All Permissions</span></a>
 		</li>
 	  </ul>
 	</li>

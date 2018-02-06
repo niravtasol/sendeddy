@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\admin;
 use App\Models\UserData;
 
@@ -44,6 +45,7 @@ class UsersController extends Controller
 
     public function list_all()
     {
+        echo \Auth::user()->hasRole('admin');
         $users = UserData::where('status', 'active')->get();
         return $users;
     }

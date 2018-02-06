@@ -1,19 +1,16 @@
-@extends('admin.layouts.main')
-
-{{-- The Page Title --}}
-    @section('title')
+    <?php $__env->startSection('title'); ?>
         User Permissions
-    @stop
+    <?php $__env->stopSection(); ?>
 
-{{-- This is used for custom JS css at Header --}}
-    @section('pagestyle')
 
-        <link rel="stylesheet" href="{{ asset('/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <?php $__env->startSection('pagestyle'); ?>
 
-    @stop
+        <link rel="stylesheet" href="<?php echo e(asset('/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')); ?>">
 
-{{-- This is the main content area --}}
-    @section('content')
+    <?php $__env->stopSection(); ?>
+
+
+    <?php $__env->startSection('content'); ?>
 
     <section class="content-header">
       <h1>
@@ -27,22 +24,22 @@
     </section>
 
  <section class="content">
-    @if (Session::has('message'))
+    <?php if(Session::has('message')): ?>
         <div class="alert alert-info alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-           <p> <i class="fa fa-warning"></i> &nbsp;&nbsp; {{ Session::get('message') }} </p> 
+           <p> <i class="fa fa-warning"></i> &nbsp;&nbsp; <?php echo e(Session::get('message')); ?> </p> 
         </div>
-    @endif
+    <?php endif; ?>
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
               <h3 class="box-title pull-left">All Permissions</h3>
-              @permission('role-create')
-              <a href="{{ url('/admin/addpermission') }}">
+              <?php if (\Entrust::can('role-create')) : ?>
+              <a href="<?php echo e(url('/admin/addpermission')); ?>">
               <button type="button" class="btn btn-success pull-right"> Add Permissions </button>
               </a>
-              @endpermission
+              <?php endif; // Entrust::can ?>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -81,21 +78,21 @@
     <!-- /.content -->
 
 
-    @stop
+    <?php $__env->stopSection(); ?>
 
-{{-- This is used for custom JS css at footer --}}
-    @section('pagejs')
 
-        <!-- <script src="{{ asset('/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script> -->
+    <?php $__env->startSection('pagejs'); ?>
+
+        <!-- <script src="<?php echo e(asset('/bower_components/datatables.net/js/jquery.dataTables.min.js')); ?>"></script> -->
         <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-        <script src="{{ asset('/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+        <script src="<?php echo e(asset('/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')); ?>"></script>
         <script type="text/javascript">
           $(function () {
             $('#permissiontable').DataTable({
               processing    : true,
               serverSide    : true,
-              ajax          : '{{ route('permissions.listAjax') }}',
-              // "language"    : {"processing": "<img src='{{ asset('/images/loading.gif') }}' />"},
+              ajax          : '<?php echo e(route('permissions.listAjax')); ?>',
+              // "language"    : {"processing": "<img src='<?php echo e(asset('/images/loading.gif')); ?>' />"},
               'paging'      : true,
               'lengthChange': true,
               'searching'   : true,
@@ -123,4 +120,5 @@
 
           });
         </script>
-    @stop
+    <?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

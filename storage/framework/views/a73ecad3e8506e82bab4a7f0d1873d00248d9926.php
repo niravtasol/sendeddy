@@ -1,16 +1,13 @@
-@extends('admin.layouts.main')
-
-{{-- The Page Title --}}
-    @section('title')
+    <?php $__env->startSection('title'); ?>
         Create New Permission
-    @stop
+    <?php $__env->stopSection(); ?>
 
-{{-- This is used for custom JS css at Header --}}
-    @section('pagestyle')
-    @stop
 
-{{-- This is the main content area --}}
-    @section('content')
+    <?php $__env->startSection('pagestyle'); ?>
+    <?php $__env->stopSection(); ?>
+
+
+    <?php $__env->startSection('content'); ?>
 
     <section class="content-header">
       <h1>
@@ -30,32 +27,33 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">Add Permission</h3>
                         <div class="pull-right">
-                            <a class="btn btn-primary" href="{{ url('/admin/permissions') }}"> Back</a>
+                            <a class="btn btn-primary" href="<?php echo e(url('/admin/permissions')); ?>"> Back</a>
                         </div>
 
                     </div>
                     <div class="box-body">
-                        <form method="post" action="{{ url('/admin/permission/create') }}">
-                            {{ csrf_field() }}
+                        <form method="post" action="<?php echo e(url('/admin/permission/create')); ?>">
+                            <?php echo e(csrf_field()); ?>
+
                            
-                            <div class="col-xs-12 col-sm-12 col-md-12 {{ $errors->has('name') ? ' has-error' : '' }} form-group">
+                            <div class="col-xs-12 col-sm-12 col-md-12 <?php echo e($errors->has('name') ? ' has-error' : ''); ?> form-group">
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" name="name" placeholder="Permission Name" required>
-                                 @if ($errors->has('name'))
+                                 <?php if($errors->has('name')): ?>
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('name') }}</strong>
+                                            <strong><?php echo e($errors->first('name')); ?></strong>
                                         </span>
-                                   @endif
+                                   <?php endif; ?>
                             </div>
 
-                            <div class="col-xs-12 col-sm-12 col-md-12 {{ $errors->has('display_name') ? ' has-error' : '' }} form-group">
+                            <div class="col-xs-12 col-sm-12 col-md-12 <?php echo e($errors->has('display_name') ? ' has-error' : ''); ?> form-group">
                                 <label for="display_name">Display Name</label>
                                 <input type="text" class="form-control" name="display_name" placeholder="Permission Name" required>
-                                 @if ($errors->has('display_name'))
+                                 <?php if($errors->has('display_name')): ?>
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('display_name') }}</strong>
+                                            <strong><?php echo e($errors->first('display_name')); ?></strong>
                                         </span>
-                                   @endif
+                                   <?php endif; ?>
                             </div>
 
                             <div class="col-xs-12 col-sm-12 col-md-12 form-group">
@@ -72,8 +70,9 @@
         </div>
     </section>
 
-    @stop
+    <?php $__env->stopSection(); ?>
 
-{{-- This is used for custom JS css at footer --}}
-    @section('pagejs')
-    @stop
+
+    <?php $__env->startSection('pagejs'); ?>
+    <?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -78,7 +78,7 @@
 	</li>
 
 
-	<li class="treeview <?php if(\Request::is('admin/roles')): ?> active <?php endif; ?>">
+	<li class="treeview <?php if(\Request::is('admin/roles') || \Request::is('admin/permissions') ): ?> active <?php endif; ?>">
 	  <a href="<?php echo e(url('/admin/roles')); ?>"><i class="fa fa-user"></i> <span>Roles</span>
 		<span class="pull-right-container">
 			<i class="fa fa-angle-left pull-right"></i>
@@ -87,6 +87,9 @@
 	  <ul class="treeview-menu">
 		<li>
 			<a href="<?php echo e(url('/admin/roles')); ?>"><i class="fa fa-user"></i> <span>All Roles</span></a>
+		</li>
+		<li>
+			<a href="<?php echo e(url('/admin/permissions')); ?>"><i class="fa fa-key"></i> <span>All Permissions</span></a>
 		</li>
 	  </ul>
 	</li>

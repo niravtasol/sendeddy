@@ -1,0 +1,80 @@
+    <?php $__env->startSection('title'); ?>
+        Edit Permission
+    <?php $__env->stopSection(); ?>
+
+
+    <?php $__env->startSection('pagestyle'); ?>
+    <?php $__env->stopSection(); ?>
+
+
+    <?php $__env->startSection('content'); ?>
+
+    <section class="content-header">
+      <h1>
+      Edit Permission
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Edit Permission</li>
+      </ol>       
+    </section>
+    <section class="content">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Edit Permission</h3>
+                        <div class="pull-right">
+                            <a class="btn btn-primary" href="<?php echo e(url('/admin/permissions')); ?>"> Back</a>
+                        </div>
+
+                    </div>
+                    <div class="box-body">
+                        <form method="post" action="<?php echo e(url('/admin/permission/edit')); ?>">
+                            <?php echo e(csrf_field()); ?>
+
+                           
+                            <div class="col-xs-12 col-sm-12 col-md-12 <?php echo e($errors->has('name') ? ' has-error' : ''); ?> form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="Permission Name" required value="<?php echo e($permission->name); ?>">
+                                 <?php if($errors->has('name')): ?>
+                                        <span class="help-block">
+                                            <strong><?php echo e($errors->first('name')); ?></strong>
+                                        </span>
+                                   <?php endif; ?>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12 <?php echo e($errors->has('display_name') ? ' has-error' : ''); ?> form-group">
+                                <label for="display_name">Display Name</label>
+                                <input type="text" class="form-control" name="display_name" placeholder="Permission Name" required value="<?php echo e($permission->display_name); ?>">
+                                 <?php if($errors->has('display_name')): ?>
+                                        <span class="help-block">
+                                            <strong><?php echo e($errors->first('display_name')); ?></strong>
+                                        </span>
+                                   <?php endif; ?>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                                <label for="description">Description</label>
+                                <textarea name="description" id="description" rows="3" class="form-control"><?php echo e($permission->description); ?></textarea>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-right form-group">
+                                <input type="hidden" name="id" id="id" value="<?php echo e($permission->id); ?>">
+                                <button type="submit" class="btn btn-primary"> Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <?php $__env->stopSection(); ?>
+
+
+    <?php $__env->startSection('pagejs'); ?>
+    <?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
